@@ -6,15 +6,25 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.contactmanager.databinding.ActivityMainBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
 
+    public lateinit var databaseReference: DatabaseReference
     public lateinit var contactAdapter: ContactAdapter
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("DatabaseName")
+        var databaseClass = Contact("26011", "09054709460")
+
+        databaseReference.child("MelItem10").setValue(databaseClass).addOnSuccessListener {
+            Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+        }
 
         contactAdapter = ContactAdapter(mutableListOf(
             Contact("John Daniel", "09458854796")
